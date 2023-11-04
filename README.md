@@ -10,20 +10,20 @@ import ru.oklookat.images4kt.similar
 import java.net.URL
 import javax.imageio.ImageIO
 
-fun compare() {
-	// Photos to compare.
+fun compare() { 
+    // Photos to compare.
     val url1 = URL("https://upload.wikimedia.org/wikipedia/en/c/c1/The_Weeknd_-_After_Hours.png")
     val url2 = URL("https://upload.wikimedia.org/wikipedia/ru/4/47/LanaDelRey_BornToDie.jpg")
     
-	// Read images.
+    // Read images.
     val img1 = ImageIO.read(url1)
     val img2 = ImageIO.read(url2)
-
-	// Icons are compact image representations (image "hashes").
+    
+    // Icons are compact image representations (image "hashes").
     val icon1 = icon(img1)
     val icon2 = icon(img2)
-
-	// Comparison. Images are not used directly. Icons are used instead, because they have tiny memory footprint and fast to compare. If you need to include images rotated right and left use func Similar90270.
+    
+    // Comparison. Images are not used directly. Icons are used instead, because they have tiny memory footprint and fast to compare. If you need to include images rotated right and left use func Similar90270.
     if (similar(icon1, icon2)) {
         println("Images are similar.")
     } else {
