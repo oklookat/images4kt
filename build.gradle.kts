@@ -17,7 +17,7 @@ dependencies {
 
 var sGroupId = "ru.oklookat"
 val sArtifactId = "images4kt"
-val sVersion = "1.0.0-p1"
+val sVersion = "1.0.0-p2"
 
 group = sGroupId
 version = sVersion
@@ -47,8 +47,8 @@ configure<PublishingExtension> {
         artifactId = sArtifactId
         version = sVersion
         pom.packaging = "jar"
-        artifact("$buildDir/libs/${artifactId}-$version") { classifier = "jar" }
-        artifact("$buildDir/libs/${artifactId}-$version-sources") { classifier = "sources" }
+        artifact("$buildDir/libs/${artifactId}-$version.jar") { classifier = "jar" }
+        artifact("$buildDir/libs/${artifactId}-$version-sources.jar") { classifier = "sources" }
     }
     repositories {
         maven {
