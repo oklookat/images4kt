@@ -41,7 +41,7 @@ configure<PublishingExtension> {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = URI("https://maven.pkg.github.com/oklookat/image4kt")
+            url = URI("https://maven.pkg.github.com/oklookat/images4kt")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
