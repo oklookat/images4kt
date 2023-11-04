@@ -15,8 +15,12 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
-group = "ru.oklookat"
-version = "1.0.0"
+var sGroupId = "ru.oklookat"
+val sArtifactId = "images4kt"
+val sVersion = "1.0.0"
+
+group = sGroupId
+version = sVersion
 
 tasks.test {
     useJUnitPlatform()
@@ -38,13 +42,13 @@ tasks.jar {
 }
 
 configure<PublishingExtension> {
-    publications.create<MavenPublication>("images4kt") {
-        groupId = "ru.oklookat"
-        artifactId = "images4kt"
-        version = "1.0.0"
+    publications.create<MavenPublication>(sArtifactId) {
+        groupId = sGroupId
+        artifactId = sArtifactId
+        version = sVersion
         pom.packaging = "jar"
-        artifact("$buildDir/libs/${artifactId}-$version.jar")
-        artifact("$buildDir/libs/${artifactId}-$version-sources.jar")
+        artifact("$buildDir/libs/${artifactId}-$version.jar") { classifier = "jar" }
+        artifact("$buildDir/libs/${artifactId}-$version-sources.jar") { classifier = "sources" }
     }
     repositories {
         maven {
