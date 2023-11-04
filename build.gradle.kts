@@ -39,7 +39,7 @@ tasks.jar {
 
 configure<PublishingExtension> {
     publications.create<MavenPublication>("images4kt") {
-        groupId = "ru.oklookat.images4kt"
+        groupId = "ru.oklookat"
         artifactId = "images4kt"
         version = "1.0.0"
         pom.packaging = "jar"
