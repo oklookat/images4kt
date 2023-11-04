@@ -38,6 +38,14 @@ tasks.jar {
 }
 
 configure<PublishingExtension> {
+    publications.create<MavenPublication>("images4kt") {
+        groupId = "ru.oklookat.images4kt"
+        artifactId = "images4kt"
+        version = "1.0.0"
+        pom.packaging = "jar"
+        artifact("$buildDir/libs/${artifactId}-$version.jar")
+        artifact("$buildDir/libs/${artifactId}-$version-sources.jar")
+    }
     repositories {
         maven {
             name = "GitHubPackages"
