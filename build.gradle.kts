@@ -1,6 +1,9 @@
+import java.net.URI
+
 plugins {
     kotlin("jvm") version "1.9.0"
     `java-library`
+    `maven-publish`
 }
 
 repositories {
@@ -33,4 +36,18 @@ tasks.jar {
             "Implementation-Version" to project.version))
     }
 }
+
+configure<PublishingExtension> {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = URI("https://maven.pkg.github.com/oklookat/image4kt")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
 
