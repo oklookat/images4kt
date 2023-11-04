@@ -36,8 +36,12 @@ java {
 
 tasks.jar {
     manifest {
-        attributes(mapOf("Implementation-Title" to project.name,
-            "Implementation-Version" to project.version))
+        attributes(
+            mapOf(
+                "Implementation-Title" to project.name,
+                "Implementation-Version" to project.version
+            )
+        )
     }
 }
 
@@ -51,15 +55,7 @@ configure<PublishingExtension> {
             name = sArtifactId
         }
         from(components["java"])
-    }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = URI("https://maven.pkg.github.com/oklookat/images4kt")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
+        artifact("$buildDir/libs/$artifactId-$version.jar") { classifier = "jar" }
+        artifact("$buildDir/libs/$artifactId-$version-sources.jar") { classifier = "sources" }
     }
 }
