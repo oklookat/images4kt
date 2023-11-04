@@ -59,7 +59,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ github.workspace }}/*.jar
+          files: ${{ github.workspace }}/*.jar | ${{ github.workspace }}/pom-default.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
