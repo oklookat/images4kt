@@ -2,6 +2,13 @@
 
 **Fork of https://github.com/vitali-fedulov/images4**
 
+## Installation
+
+I haven't figured out how to publish Java projects, so there are two installation options:
+
+1. Download the .jar from the releases
+2. Include this project in your project
+
 ## Example of comparing 2 images
 
 ```kotlin

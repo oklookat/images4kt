@@ -1,5 +1,3 @@
-import java.net.URI
-
 plugins {
     kotlin("jvm") version "1.9.0"
     `java-library`
@@ -54,7 +52,6 @@ configure<PublishingExtension> {
             packaging = "jar"
             name = sArtifactId
         }
-        from(components["java"])
         artifact("$buildDir/libs/$artifactId-$version.jar") { classifier = "jar" }
         artifact("$buildDir/libs/$artifactId-$version-sources.jar") { classifier = "sources" }
     }
