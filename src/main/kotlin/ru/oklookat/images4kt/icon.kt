@@ -119,9 +119,9 @@ class Icon(var pixels: MutableList<UShort>, var imgSize: Point) {
     (RGB for example). Size is icon size. */
     fun set(size: Int, p: Point, c1: Double, c2: Double, c3: Double) {
         // Multiplication by 255 is basically encoding Double as UShort.
-        this.pixels[arrIndex(p, size, 0)] = (c1 * 255).toInt().toUShort()
-        this.pixels[arrIndex(p, size, 1)] = (c2 * 255).toInt().toUShort()
-        this.pixels[arrIndex(p, size, 2)] = (c3 * 255).toInt().toUShort()
+        this.pixels[p.arrIndex(size, 0)] = (c1 * 255).toInt().toUShort()
+        this.pixels[p.arrIndex(size, 1)] = (c2 * 255).toInt().toUShort()
+        this.pixels[p.arrIndex(size, 2)] = (c3 * 255).toInt().toUShort()
     }
 
     /** Reads pixel values in an icon at a point.
@@ -129,9 +129,9 @@ class Icon(var pixels: MutableList<UShort>, var imgSize: Point) {
     (RGB for example). */
     fun get(size: Int, p: Point): Triple<Double, Double, Double> {
         // Division by 255 is basically decoding UShort into Double.
-        val c1 = (this.pixels[arrIndex(p, size, 0)]).toDouble() * ONE_255TH
-        val c2 = (this.pixels[arrIndex(p, size, 1)]).toDouble() * ONE_255TH
-        val c3 = (this.pixels[arrIndex(p, size, 2)]).toDouble() * ONE_255TH
+        val c1 = (this.pixels[p.arrIndex(size, 0)]).toDouble() * ONE_255TH
+        val c2 = (this.pixels[p.arrIndex(size, 1)]).toDouble() * ONE_255TH
+        val c3 = (this.pixels[p.arrIndex(size, 2)]).toDouble() * ONE_255TH
         return Triple(c1, c2, c3)
     }
 
@@ -178,21 +178,21 @@ class Icon(var pixels: MutableList<UShort>, var imgSize: Point) {
         var scale: Double
         if (c1Max != c1Min) { // Must not divide by zero.
             scale = SQ_255 / (c1Max.toDouble() - c1Min.toDouble())
-            for (n in 0 ..< NUM_PIX) {
+            for (n in 0..<NUM_PIX) {
                 val out = (this.pixels[n].toDouble() - c1Min.toDouble()) * scale
                 this.pixels[n] = out.toInt().toUShort()
             }
         }
         if (c2Max != c2Min) { // Must not divide by zero.
             scale = SQ_255 / (c2Max.toDouble() - c2Min.toDouble())
-            for (n in 0 ..< NUM_PIX)  {
+            for (n in 0..<NUM_PIX) {
                 val out = (this.pixels[n + NUM_PIX].toDouble() - c2Min.toDouble()) * scale
                 this.pixels[n + NUM_PIX] = out.toInt().toUShort()
             }
         }
         if (c3Max != c3Min) { // Must not divide by zero.
             scale = SQ_255 / (c3Max.toDouble() - c3Min.toDouble())
-            for (n in 0 ..< NUM_PIX)  {
+            for (n in 0..<NUM_PIX) {
                 val out = (this.pixels[n + 2 * NUM_PIX].toDouble() - c3Min.toDouble()) * scale
                 this.pixels[n + 2 * NUM_PIX] = out.toInt().toUShort()
             }
@@ -204,8 +204,8 @@ class Icon(var pixels: MutableList<UShort>, var imgSize: Point) {
 of 2D array.
 
 ch: color channel index (0 to 2). */
-internal fun arrIndex(p: Point, size: Int, ch: Int): Int {
-    return size * (ch * size + p.y) + p.x
+internal fun Point.arrIndex(size: Int, ch: Int): Int {
+    return size * (ch * size + this.y) + this.x
 }
 
 /** Transforms RGB components to YCbCr. */

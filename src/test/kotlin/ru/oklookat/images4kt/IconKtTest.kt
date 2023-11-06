@@ -24,21 +24,21 @@ class IconKtTest {
         var y = 3
         val size = 4
         var ch = 2
-        var got = arrIndex(Point(x, y), size, ch)
+        var got = Point(x, y).arrIndex(size, ch)
         var expected = 46
         assertEquals(got, expected)
 
         x = 1
         y = 1
         ch = 1
-        got = arrIndex(Point(x, y), size, ch)
+        got = Point(x, y).arrIndex(size, ch)
         expected = 21
         assertEquals(got, expected)
 
         x = 3
         y = 3
         ch = 0
-        got = arrIndex(Point(x, y), size, ch)
+        got = Point(x, y).arrIndex(size, ch)
         expected = 15
         assertEquals(got, expected)
     }
