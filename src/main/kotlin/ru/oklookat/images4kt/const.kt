@@ -9,7 +9,7 @@ package ru.oklookat.images4kt
  logos). This is useful from the privacy perspective
  if you are to use generated icons in a large searchable
  database. */
-internal const val IconSize = 11
+const val IconSize = 11
 
 /** Resampling rate defines how much information
  (how many pixels) from the source image are used

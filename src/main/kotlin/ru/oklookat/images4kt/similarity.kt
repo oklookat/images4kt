@@ -93,8 +93,8 @@ fun eucMetric(iconA: IconT, iconB: IconT): Triple<Double, Double, Double> {
 /** Print default thresholds for func similar. */
 fun defaultThresholds() {
     println("*** Default thresholds ***")
-    println("\nEuclidean distance thresholds (YCbCr): m1=$thY, m2=$thCbCr, m3=$thCbCr")
-    println("\nProportion threshold: m=$thProp\n\n")
+    println("Euclidean distance thresholds (YCbCr): m1=$thY, m2=$thCbCr, m3=$thCbCr")
+    println("Proportion threshold: m=$thProp")
 }
 
 /** Similar90270 works like Similar, but also considers rotations of ±90°.

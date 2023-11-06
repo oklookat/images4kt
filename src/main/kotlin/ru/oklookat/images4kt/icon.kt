@@ -31,7 +31,7 @@ Icons made with IconNN can be used instead of icons made with
 func Icon, but mostly for experimental purposes, allowing
 better understand how the algorithm works, or performing
 less aggressive customized normalization. Not for general use. */
-private fun iconNN(img: BufferedImage): IconT {
+fun iconNN(img: BufferedImage): IconT {
     val (resImg, imgSize) = resizeByNearest(img, Point(resizedImgSize, resizedImgSize))
     val largeIcon = sizedIcon(largeIconSize)
     var r: UInt
@@ -102,16 +102,16 @@ private fun iconNN(img: BufferedImage): IconT {
     return icon
 }
 
+fun emptyIcon(): IconT {
+    return IconT(mutableListOf(), Point(0, 0))
+}
+
 internal fun sizedIcon(size: Int): IconT {
     return IconT(
         MutableList(
             size * size * 3
         ) { 0u }, Point(0, 0)
     )
-}
-
-fun emptyIcon(): IconT {
-    return IconT(mutableListOf(), Point(0, 0))
 }
 
 /* Set places pixel values in an icon at a point.
@@ -129,7 +129,7 @@ fun set(icon: IconT, size: Int, p: Point, c1: Double, c2: Double, c3: Double) {
 c1, c2, c3 are color values for each channel
 (RGB for example).
 Exported to be used in package imagehash.*/
-internal fun get(icon: IconT, size: Int, p: Point): Triple<Double, Double, Double> {
+fun get(icon: IconT, size: Int, p: Point): Triple<Double, Double, Double> {
     // Division by 255 is basically decoding uint16 into float64.
     val c1 = (icon.pixels[arrIndex(p, size, 0)]).toDouble() * one255th
     val c2 = (icon.pixels[arrIndex(p, size, 1)]).toDouble() * one255th
@@ -224,7 +224,7 @@ internal fun IconT.normalize() {
 }
 
 /** Rotate rotates an icon by 90 degrees clockwise. */
-internal fun rotate90(icon: IconT): IconT {
+fun rotate90(icon: IconT): IconT {
     val rotated = sizedIcon(IconSize)
 
     for (x in 0..<IconSize) {
