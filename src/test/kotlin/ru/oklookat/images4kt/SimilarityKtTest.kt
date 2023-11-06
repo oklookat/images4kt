@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.*
 import javax.imageio.ImageIO
 import kotlin.io.path.Path
 
-private typealias simExecutor = (IconT, IconT) -> Boolean
+private typealias simExecutor = (Icon, Icon) -> Boolean
 
 class SimilarityKtTest {
 
@@ -67,9 +67,9 @@ class SimilarityKtTest {
         isSimilar: Boolean,
         exec: simExecutor
     ) {
-        var dir = Path(resourcesDir, subDir, fA).toFile()
+        var dir = Path(TEST_RESOURCES_DIR, subDir, fA).toFile()
         val imgA = ImageIO.read(dir)
-        dir = Path(resourcesDir, subDir, fB).toFile()
+        dir = Path(TEST_RESOURCES_DIR, subDir, fB).toFile()
         val imgB = ImageIO.read(dir)
         val iconA = icon(imgA)
         val iconB = icon(imgB)

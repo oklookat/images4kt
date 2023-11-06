@@ -1,3 +1,3 @@
 package ru.oklookat.images4kt
 
-internal const val resourcesDir = "src/test/resources"
+internal const val TEST_RESOURCES_DIR = "src/test/resources"

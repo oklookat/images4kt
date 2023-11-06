@@ -15,7 +15,7 @@ dependencies {
 
 var sGroupId = "ru.oklookat"
 val sArtifactId = "images4kt"
-val sVersion = "1.0.2"
+val sVersion = "2.0.0"
 
 group = sGroupId
 version = sVersion

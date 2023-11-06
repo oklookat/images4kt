@@ -9,20 +9,20 @@ import kotlin.io.path.Path
 import kotlin.test.assertTrue
 
 
-private data class resizeByNearestTestCase (val inFile: String, val srcX: Int,
-                                    val srcY: Int,
-                                    val outFile: String,
-                                    val dstX: Int, val dstY: Int)
+private data class ResizeByNearestTestCase (val inFile: String, val srcX: Int,
+                                            val srcY: Int,
+                                            val outFile: String,
+                                            val dstX: Int, val dstY: Int)
 
 class ImageKtTest {
 
     @Test
     fun resizeByNearest() {
-        val testDir = Path(resourcesDir, "resample")
+        val testDir = Path(TEST_RESOURCES_DIR, "resample")
         val tables = listOf(
-            resizeByNearestTestCase("original.png", 533, 400,
+            ResizeByNearestTestCase("original.png", 533, 400,
                 "nearest100x100.png", 100, 100),
-            resizeByNearestTestCase("nearest100x100.png", 100, 100,
+            ResizeByNearestTestCase("nearest100x100.png", 100, 100,
                 "nearest533x400.png", 533, 400),
         )
         for (table in tables) {
