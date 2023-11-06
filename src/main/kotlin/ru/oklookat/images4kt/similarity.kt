@@ -1,6 +1,6 @@
 package ru.oklookat.images4kt
 
-/** similar returns similarity verdict based on Euclidean
+/** Similarity verdict based on Euclidean
 and proportion similarity. */
 fun similar(iconA: Icon, iconB: Icon): Boolean {
     if (!propSimilar(iconA, iconB)) {
@@ -12,14 +12,14 @@ fun similar(iconA: Icon, iconB: Icon): Boolean {
     return true
 }
 
-/** propSimilar gives a similarity verdict for image A and B based on
+/** Similarity verdict for image A and B based on
 their height and width. When proportions are similar, it returns
 true. */
 internal fun propSimilar(iconA: Icon, iconB: Icon): Boolean {
     return propMetric(iconA, iconB) < TH_PROP
 }
 
-/** propMetric gives image proportion similarity metric for image A
+/** Image proportion similarity metric for image A
 and B. The smaller the metric the more similar are images by their
 x-y size. */
 fun propMetric(iconA: Icon, iconB: Icon): Double {
@@ -51,10 +51,10 @@ fun propMetric(iconA: Icon, iconB: Icon): Double {
     return m
 }
 
-/** eucSimilar gives a similarity verdict for image A and B based
+/** Similarity verdict for image A and B based
 on Euclidean distance between pixel values of their icons.
 When the distance is small, the function returns true.
-iconA and iconB are generated with the Icon function.
+iconA and iconB are generated with the icon function.
 eucSimilar wraps EucMetric with well-tested thresholds. */
 internal fun eucSimilar(iconA: Icon, iconB: Icon): Boolean {
     val (m1, m2, m3) = eucMetric(iconA, iconB)
@@ -63,9 +63,10 @@ internal fun eucSimilar(iconA: Icon, iconB: Icon): Boolean {
             m3 < TH_CB_CR
 }
 
-/** eucMetric returns Euclidean distances between 2 icons.
+/** Euclidean distances between 2 icons.
 These are 3 metrics corresponding to each color channel.
 Distances are squared, not to waste CPU on square root calculations.
+
 Note: color channels of icons are YCbCr (not RGB). */
 fun eucMetric(iconA: Icon, iconB: Icon): Triple<Double, Double, Double> {
     var cA: Double
@@ -90,14 +91,14 @@ fun eucMetric(iconA: Icon, iconB: Icon): Triple<Double, Double, Double> {
     return Triple(m1, m2, m3)
 }
 
-/** Print default thresholds for func similar. */
+/** Prints default thresholds for func similar. */
 fun defaultThresholds() {
     println("*** Default thresholds ***")
     println("Euclidean distance thresholds (YCbCr): m1=$THY, m2=$TH_CB_CR, m3=$TH_CB_CR")
     println("Proportion threshold: m=$TH_PROP")
 }
 
-/** Similar90270 works like Similar, but also considers rotations of ±90°.
+/** Works like 'similar' function, but also considers rotations of ±90°.
 Those are rotations users might reasonably often do. */
 fun similar90270(iconA: Icon, iconB: Icon): Boolean {
     if (similar(iconA, iconB)) return true

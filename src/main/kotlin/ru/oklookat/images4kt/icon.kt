@@ -3,7 +3,7 @@ package ru.oklookat.images4kt
 import java.awt.Point
 import java.awt.image.BufferedImage
 
-/** Icon generates a normalized image signature ("icon").
+/** Generates a normalized image signature ("icon").
 Generated icons can then be stored in a database and used
 for comparison. Icon is the recommended function,
 vs less robust func IconNN. */
@@ -20,9 +20,9 @@ fun icon(img: BufferedImage): Icon {
     return icon
 }
 
-/** IconNN generates a NON-normalized image signature (icon).
-Icons made with IconNN can be used instead of icons made with
-func Icon, but mostly for experimental purposes, allowing
+/** Generates a NON-normalized image signature (icon).
+Icons made with iconNN can be used instead of icons made with
+func icon, but mostly for experimental purposes, allowing
 better understand how the algorithm works, or performing
 less aggressive customized normalization. Not for general use. */
 fun iconNN(img: BufferedImage): Icon {
@@ -51,10 +51,12 @@ fun iconNN(img: BufferedImage): Icon {
                     sumB += b
                 }
             }
-            largeIcon.set(LARGE_ICON_SIZE, Point(x, y),
+            largeIcon.set(
+                LARGE_ICON_SIZE, Point(x, y),
                 sumR.toDouble() * INV_SAMPLE_PIXELS_2,
                 sumG.toDouble() * INV_SAMPLE_PIXELS_2,
-                sumB.toDouble() * INV_SAMPLE_PIXELS_2)
+                sumB.toDouble() * INV_SAMPLE_PIXELS_2
+            )
         }
     }
 
@@ -153,8 +155,9 @@ class Icon(var pixels: MutableList<UShort>, var imgSize: Point) {
         return Triple(c1, c2, c3)
     }
 
-    /** Normalize stretches histograms for the 3 channels of an icon, so that
+    /** Stretches histograms for the 3 channels of an icon, so that
     min/max values of each channel are 0/255 correspondingly.
+
     Note: values of Icon are pre multiplied by 255, thus having maximum
     value of SQ_255 constant corresponding to display color value of 255. */
     internal fun normalize() {
@@ -224,13 +227,15 @@ class Icon(var pixels: MutableList<UShort>, var imgSize: Point) {
     }
 }
 
-/** ArrIndex gets a pixel position in 1D array from a point
-of 2D array. ch is color channel index (0 to 2). */
+/** Pixel position in 1D array from a point
+of 2D array.
+
+ch: color channel index (0 to 2). */
 internal fun arrIndex(p: Point, size: Int, ch: Int): Int {
     return size * (ch * size + p.y) + p.x
 }
 
-/** yCbCr transforms RGB components to YCbCr. */
+/** Transforms RGB components to YCbCr. */
 internal fun yCbCr(r: Double, g: Double, b: Double): Triple<Double, Double, Double> {
     val yc = 0.299000 * r + 0.587000 * g + 0.114000 * b
     val cb = 128 - 0.168736 * r - 0.331264 * g + 0.500000 * b

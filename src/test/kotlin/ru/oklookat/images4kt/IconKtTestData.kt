@@ -1,7 +1,7 @@
 package ru.oklookat.images4kt
 
 internal fun getNormalizeSourcePixels(): MutableList<UShort> {
-   return mutableListOf(
+    return mutableListOf(
         8670u,
         45801u,
         29935u,

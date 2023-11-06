@@ -9,10 +9,12 @@ import kotlin.io.path.Path
 import kotlin.test.assertTrue
 
 
-private data class ResizeByNearestTestCase (val inFile: String, val srcX: Int,
-                                            val srcY: Int,
-                                            val outFile: String,
-                                            val dstX: Int, val dstY: Int)
+private data class ResizeByNearestTestCase(
+    val inFile: String, val srcX: Int,
+    val srcY: Int,
+    val outFile: String,
+    val dstX: Int, val dstY: Int
+)
 
 class ImageKtTest {
 
@@ -20,15 +22,19 @@ class ImageKtTest {
     fun resizeByNearest() {
         val testDir = Path(TEST_RESOURCES_DIR, "resample")
         val tables = listOf(
-            ResizeByNearestTestCase("original.png", 533, 400,
-                "nearest100x100.png", 100, 100),
-            ResizeByNearestTestCase("nearest100x100.png", 100, 100,
-                "nearest533x400.png", 533, 400),
+            ResizeByNearestTestCase(
+                "original.png", 533, 400,
+                "nearest100x100.png", 100, 100
+            ),
+            ResizeByNearestTestCase(
+                "nearest100x100.png", 100, 100,
+                "nearest533x400.png", 533, 400
+            ),
         )
         for (table in tables) {
-            val inImgFile= Path(testDir.toString(), table.inFile).toFile()
+            val inImgFile = Path(testDir.toString(), table.inFile).toFile()
             val inImg = ImageIO.read(inImgFile)
-            val outImgFile= Path(testDir.toString(), table.outFile).toFile()
+            val outImgFile = Path(testDir.toString(), table.outFile).toFile()
             val outImg = ImageIO.read(outImgFile)
 
             val (resampled, srcSize) = resizeByNearest(inImg, Point(table.dstX, table.dstY))
