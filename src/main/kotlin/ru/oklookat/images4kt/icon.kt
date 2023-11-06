@@ -28,27 +28,18 @@ less aggressive customized normalization. Not for general use. */
 fun iconNN(img: BufferedImage): Icon {
     val (resImg, imgSize) = resizeByNearest(img, Point(RESIZED_IMG_SIZE, RESIZED_IMG_SIZE))
     val largeIcon = sizedIcon(LARGE_ICON_SIZE)
-    var r: UInt
-    var g: UInt
-    var b: UInt
-    var sumR: UInt
-    var sumG: UInt
-    var sumB: UInt
 
     for (x in 0..<LARGE_ICON_SIZE) {
         for (y in 0..<LARGE_ICON_SIZE) {
-            sumR = 0u
-            sumG = 0u
-            sumB = 0u
+            var sumR = 0u
+            var sumG = 0u
+            var sumB = 0u
             for (m in 0..<SAMPLES) {
                 for (n in 0..<SAMPLES) {
                     val rgb = resImg.getRGB(x * SAMPLES + m, y * SAMPLES + n)
-                    r = (rgb ushr 16).toUInt()
-                    g = (rgb ushr 8 and 0xFF).toUInt()
-                    b = (rgb and 0xFF).toUInt()
-                    sumR += r
-                    sumG += g
-                    sumB += b
+                    sumR += (rgb ushr 16).toUInt()
+                    sumG += (rgb ushr 8 and 0xFF).toUInt()
+                    sumB += (rgb and 0xFF).toUInt()
                 }
             }
             largeIcon.set(
@@ -61,28 +52,17 @@ fun iconNN(img: BufferedImage): Icon {
     }
 
     val icon = sizedIcon(ICON_SIZE)
-    var xd: Int
-    var yd: Int
-    var c1: Double
-    var c2: Double
-    var c3: Double
-    var s1: Double
-    var s2: Double
-    var s3: Double
 
     for (x in 1..<LARGE_ICON_SIZE - 1 step 2) {
-        xd = x / 2
+        val xd = x / 2
         for (y in 1..<LARGE_ICON_SIZE - 1 step 2) {
-            yd = y / 2
-            s1 = 0.0
-            s2 = 0.0
-            s3 = 0.0
+            val yd = y / 2
+            var s1 = 0.0
+            var s2 = 0.0
+            var s3 = 0.0
             for (n in -1..1) {
                 for (m in -1..1) {
-                    val (c1Value, c2Value, c3Value) = largeIcon.get(LARGE_ICON_SIZE, Point(x + n, y + m))
-                    c1 = c1Value
-                    c2 = c2Value
-                    c3 = c3Value
+                    val (c1, c2, c3) = largeIcon.get(LARGE_ICON_SIZE, Point(x + n, y + m))
                     s1 += c1
                     s2 += c2
                     s3 += c3
@@ -167,11 +147,10 @@ class Icon(var pixels: MutableList<UShort>, var imgSize: Point) {
         var c1Max: UShort = 0u
         var c2Max: UShort = 0u
         var c3Max: UShort = 0u
-        var scale: Double
-        var n = 0
+
 
         // Looking for extreme values.
-        while (n < NUM_PIX) {
+        for (n in 0..<NUM_PIX) {
             // Channel 1.
             if (this.pixels[n] > c1Max) {
                 c1Max = this.pixels[n]
@@ -193,35 +172,29 @@ class Icon(var pixels: MutableList<UShort>, var imgSize: Point) {
             if (this.pixels[n + 2 * NUM_PIX] < c3Min) {
                 c3Min = this.pixels[n + 2 * NUM_PIX]
             }
-            n++
         }
 
         // Normalization.
+        var scale: Double
         if (c1Max != c1Min) { // Must not divide by zero.
             scale = SQ_255 / (c1Max.toDouble() - c1Min.toDouble())
-            n = 0
-            while (n < NUM_PIX) {
+            for (n in 0 ..< NUM_PIX) {
                 val out = (this.pixels[n].toDouble() - c1Min.toDouble()) * scale
                 this.pixels[n] = out.toInt().toUShort()
-                n++
             }
         }
         if (c2Max != c2Min) { // Must not divide by zero.
             scale = SQ_255 / (c2Max.toDouble() - c2Min.toDouble())
-            n = 0
-            while (n < NUM_PIX) {
+            for (n in 0 ..< NUM_PIX)  {
                 val out = (this.pixels[n + NUM_PIX].toDouble() - c2Min.toDouble()) * scale
                 this.pixels[n + NUM_PIX] = out.toInt().toUShort()
-                n++
             }
         }
         if (c3Max != c3Min) { // Must not divide by zero.
             scale = SQ_255 / (c3Max.toDouble() - c3Min.toDouble())
-            n = 0
-            while (n < NUM_PIX) {
+            for (n in 0 ..< NUM_PIX)  {
                 val out = (this.pixels[n + 2 * NUM_PIX].toDouble() - c3Min.toDouble()) * scale
                 this.pixels[n + 2 * NUM_PIX] = out.toInt().toUShort()
-                n++
             }
         }
     }

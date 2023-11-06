@@ -12,15 +12,13 @@ internal fun resizeByNearest(src: BufferedImage, dstSize: Point): Pair<BufferedI
     val yMax = src.height
     val xScale = xMax.toDouble() / dstSize.x
     val yScale = yMax.toDouble() / dstSize.y
-
     val dst = BufferedImage(dstSize.x, dstSize.y, BufferedImage.TYPE_INT_ARGB)
 
     for (y in 0..<dstSize.y) {
         for (x in 0..<dstSize.x) {
             val sampleX = (x.toDouble() * xScale).toInt().coerceIn(0, xMax - 1)
             val sampleY = (y.toDouble() * yScale).toInt().coerceIn(0, yMax - 1)
-            val color = Color(src.getRGB(sampleX, sampleY))
-            dst.setRGB(x, y, color.rgb)
+            dst.setRGB(x, y, src.getRGB(sampleX, sampleY))
         }
     }
 

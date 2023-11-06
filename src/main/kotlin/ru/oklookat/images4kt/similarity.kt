@@ -107,7 +107,5 @@ fun similar90270(iconA: Icon, iconB: Icon): Boolean {
     if (similar(iconA, iconB.rotate90())) return true
 
     // As if iconB was rotated 270 degrees.
-    if (similar(iconA.rotate90(), iconB)) return true
-
-    return false
+    return similar(iconA.rotate90(), iconB)
 }
