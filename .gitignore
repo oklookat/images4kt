@@ -16,6 +16,9 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+### Android Studio ###
+local.properties
+
 ### Eclipse ###
 .apt_generated
 .classpath

@@ -3,7 +3,6 @@ package ru.oklookat.images4kt
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
-import java.awt.Point
 import javax.imageio.ImageIO
 import kotlin.io.path.Path
 import kotlin.math.abs
@@ -85,8 +84,8 @@ class IconKtTest {
         val testDir = "resample"
         val imageName = "nearest533x400.png"
         val imgFile = Path(TEST_RESOURCES_DIR, testDir, imageName).toFile()
-        val img = ImageIO.read(imgFile)
-        val icon = icon(img)
+        val img = Img(ImageIO.read(imgFile))
+        val icon = icon(ImgFact(), img)
         assertEquals(icon.imgSize.x, 533)
         assertEquals(icon.imgSize.y, 400)
     }
@@ -146,12 +145,12 @@ class IconKtTest {
         val testDir = "rotate"
 
         val imgFile0 = Path(TEST_RESOURCES_DIR, testDir, "0.jpg").toFile()
-        val img0 = ImageIO.read(imgFile0)
-        val icon0 = icon(img0)
+        val img0 = Img(ImageIO.read(imgFile0))
+        val icon0 = icon(ImgFact(), img0)
 
         val imgFile90 = Path(TEST_RESOURCES_DIR, testDir, "90.jpg").toFile()
-        val img90 = ImageIO.read(imgFile90)
-        val icon90 = icon(img90)
+        val img90 = Img(ImageIO.read(imgFile90))
+        val icon90 = icon(ImgFact(), img90)
 
         assertTrue(similar(icon0.rotate90(), icon90))
     }

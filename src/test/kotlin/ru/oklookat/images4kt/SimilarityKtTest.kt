@@ -68,11 +68,11 @@ class SimilarityKtTest {
         exec: simExecutor
     ) {
         var dir = Path(TEST_RESOURCES_DIR, subDir, fA).toFile()
-        val imgA = ImageIO.read(dir)
+        val imgA = Img(ImageIO.read(dir))
         dir = Path(TEST_RESOURCES_DIR, subDir, fB).toFile()
-        val imgB = ImageIO.read(dir)
-        val iconA = icon(imgA)
-        val iconB = icon(imgB)
+        val imgB = Img(ImageIO.read(dir))
+        val iconA = icon(ImgFact(), imgA)
+        val iconB = icon(ImgFact(), imgB)
         if (isSimilar) {
             assertTrue(exec(iconA, iconB))
         } else {

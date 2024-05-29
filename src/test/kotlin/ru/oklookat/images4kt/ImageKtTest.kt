@@ -2,8 +2,6 @@ package ru.oklookat.images4kt
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import java.awt.Point
-import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import kotlin.io.path.Path
 import kotlin.test.assertTrue
@@ -33,18 +31,18 @@ class ImageKtTest {
         )
         for (table in tables) {
             val inImgFile = Path(testDir.toString(), table.inFile).toFile()
-            val inImg = ImageIO.read(inImgFile)
+            val inImg = Img(ImageIO.read(inImgFile))
             val outImgFile = Path(testDir.toString(), table.outFile).toFile()
-            val outImg = ImageIO.read(outImgFile)
+            val outImg = Img(ImageIO.read(outImgFile))
 
-            val (resampled, srcSize) = resizeByNearest(inImg, Point(table.dstX, table.dstY))
-            assertTrue(bufferedImagesEqual(resampled, outImg))
+            val (resampled, srcSize) = resizeByNearest(ImgFact(), inImg, Point(table.dstX, table.dstY))
+            assertTrue(imagesEqual(resampled, outImg))
             assertEquals(table.srcX, srcSize.x)
             assertEquals(table.srcY, srcSize.y)
         }
     }
 
-    private fun bufferedImagesEqual(img1: BufferedImage, img2: BufferedImage): Boolean {
+    private fun imagesEqual(img1: Image, img2: Image): Boolean {
         if (img1.width == img2.width && img1.height == img2.height) {
             for (x in 0..<img1.width) {
                 for (y in 0..<img1.height) {

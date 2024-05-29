@@ -12,24 +12,53 @@ I haven't figured out how to publish Java projects, so there are two installatio
 ## Example of comparing 2 images
 
 ```kotlin
+import ru.oklookat.images4kt.Image
+import ru.oklookat.images4kt.ImageFactory
+import ru.oklookat.images4kt.ImageType
 import ru.oklookat.images4kt.icon
 import ru.oklookat.images4kt.similar
+import java.awt.image.BufferedImage
 import java.net.URL
 import javax.imageio.ImageIO
 
-fun compare() { 
+class Img(private val buff: BufferedImage) : Image {
+    override fun getRGB(x: Int, y: Int): Int {
+        return buff.getRGB(x, y)
+    }
+
+    override fun setRGB(x: Int, y: Int, rgb: Int) {
+        buff.setRGB(x, y, rgb)
+    }
+
+    override val width: Int = buff.width
+    override val height: Int = buff.height
+}
+
+class ImgFact : ImageFactory {
+    override fun make(width: Int, height: Int, imgType: ImageType): Image {
+        var type = 0
+        when (imgType) {
+            ImageType.INT_ARGB -> type = BufferedImage.TYPE_INT_ARGB
+        }
+        return Img(BufferedImage(width, height, type))
+    }
+
+}
+
+fun compare() {
     // Photos to compare.
     val photo1 = URL("https://upload.wikimedia.org/wikipedia/en/c/c1/The_Weeknd_-_After_Hours.png")
-    val photo2 = URL("https://upload.wikimedia.org/wikipedia/ru/4/47/LanaDelRey_BornToDie.jpg")
-    
+    val photo2 = URL("https://upload.wikimedia.org/wikipedia/en/2/29/BornToDieAlbumCover.png")
+
     // Read images.
-    val img1 = ImageIO.read(photo1)
-    val img2 = ImageIO.read(photo2)
-    
+    val img1 = Img(ImageIO.read(photo1))
+    val img2 = Img(ImageIO.read(photo2))
+
+    val fact = ImgFact()
     // Icons are compact image representations (image "hashes").
-    val icon1 = icon(img1)
-    val icon2 = icon(img2)
-    
+    val icon1 = icon(fact, img1)
+    val icon2 = icon(fact, img2)
+
     // Comparison. Images are not used directly. Icons are used instead, because they have tiny memory footprint and fast to compare. If you need to include images rotated right and left use func Similar90270.
     if (similar(icon1, icon2)) {
         println("Images are similar.")

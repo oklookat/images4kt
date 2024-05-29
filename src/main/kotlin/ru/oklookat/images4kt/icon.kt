@@ -1,14 +1,11 @@
 package ru.oklookat.images4kt
 
-import java.awt.Point
-import java.awt.image.BufferedImage
-
 /** Generates a normalized image signature ("icon").
 Generated icons can then be stored in a database and used
 for comparison. Icon is the recommended function,
 vs less robust func IconNN. */
-fun icon(img: BufferedImage): Icon {
-    val icon = iconNN(img)
+fun icon(imgFact: ImageFactory, img: Image): Icon {
+    val icon = iconNN(imgFact, img)
 
     // Maximizing icon contrast. This to reflect on the human visual
     // experience, when high contrast (normalized) images are easier
@@ -25,8 +22,8 @@ Icons made with iconNN can be used instead of icons made with
 func icon, but mostly for experimental purposes, allowing
 better understand how the algorithm works, or performing
 less aggressive customized normalization. Not for general use. */
-fun iconNN(img: BufferedImage): Icon {
-    val (resImg, imgSize) = resizeByNearest(img, Point(RESIZED_IMG_SIZE, RESIZED_IMG_SIZE))
+fun iconNN(imgFact: ImageFactory, img: Image): Icon {
+    val (resImg, imgSize) = resizeByNearest(imgFact, img, Point(RESIZED_IMG_SIZE, RESIZED_IMG_SIZE))
     val largeIcon = sizedIcon(LARGE_ICON_SIZE)
 
     for (x in 0..<LARGE_ICON_SIZE) {
@@ -109,8 +106,7 @@ class Icon(var pixels: MutableList<UShort>, var imgSize: Point) {
         }
 
         // Swap image sizes.
-        rotated.imgSize.x = this.imgSize.y
-        rotated.imgSize.y = this.imgSize.x
+        rotated.imgSize = Point(this.imgSize.y, this.imgSize.x)
         return rotated
     }
 
